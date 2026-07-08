@@ -13,6 +13,9 @@ const statusOverlay = document.getElementById("status-overlay");
 const statusText = document.getElementById("status-text");
 const logPanel = document.getElementById("log-panel");
 const virtualCursor = document.getElementById("virtual-cursor");
+const preloader = document.getElementById("preloader");
+const loaderStatus = document.getElementById("loader-status");
+const progressFill = document.getElementById("progress-fill");
 
 // State
 let handLandmarker = undefined;
@@ -36,11 +39,18 @@ function logAction(msg) {
 
 // Initialize MediaPipe HandLandmarker
 async function initializeHandLandmarker() {
+  loaderStatus.textContent = "Downloading WASM modules (30%)...";
+  progressFill.style.width = "30%";
   statusText.textContent = "Loading AI Model...";
+  
   try {
     const vision = await FilesetResolver.forVisionTasks(
       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
     );
+    
+    loaderStatus.textContent = "Loading Neural Network (70%)...";
+    progressFill.style.width = "70%";
+    
     handLandmarker = await HandLandmarker.createFromOptions(vision, {
       baseOptions: {
         modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
@@ -49,11 +59,23 @@ async function initializeHandLandmarker() {
       runningMode: runningMode,
       numHands: 1
     });
+    
+    loaderStatus.textContent = "System Ready (100%)";
+    progressFill.style.width = "100%";
+    
     statusText.textContent = "Model Loaded. Click Enable Webcam.";
     enableWebcamButton.disabled = false;
     logAction("Hand tracking model loaded successfully.");
+    
+    // Hide the preloader after a short delay for dramatic effect
+    setTimeout(() => {
+      preloader.classList.add("fade-out");
+    }, 800);
+    
   } catch (error) {
     console.error(error);
+    loaderStatus.textContent = "Initialization Failed!";
+    loaderStatus.style.color = "#ef4444";
     statusText.textContent = "Error loading model!";
     logAction("Error loading model.");
   }
