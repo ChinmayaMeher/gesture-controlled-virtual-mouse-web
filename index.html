@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Virtual Mouse Demo</title>
+    <link rel="stylesheet" href="./style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>AI Virtual Mouse</h1>
+        <p>Control the web using your hands. Try to pinch to click!</p>
+      </header>
+      
+      <main>
+        <section class="camera-container">
+          <div class="video-wrapper">
+            <!-- Hidden video element for webcam -->
+            <video id="webcam" autoplay playsinline></video>
+            <!-- Canvas to draw MediaPipe landmarks -->
+            <canvas id="output_canvas" class="output_canvas"></canvas>
+            <div id="status-overlay" class="status-overlay">
+              <span id="status-text">Click to Start Camera</span>
+            </div>
+          </div>
+          <button id="enable-webcam-btn" class="btn primary">Enable Webcam</button>
+        </section>
+
+        <section class="demo-area">
+          <h2>Interactive Demo Area</h2>
+          <div class="demo-grid">
+            <button class="demo-target" id="target-1">Target 1</button>
+            <button class="demo-target" id="target-2">Target 2</button>
+            <div class="demo-card" id="card-1">
+              <h3>Hover Me</h3>
+              <p>Move the virtual cursor here</p>
+            </div>
+          </div>
+          <div class="log-panel" id="log-panel">
+            <p>Action Logs will appear here...</p>
+          </div>
+        </section>
+      </main>
+
+      <!-- The virtual cursor that moves around the screen -->
+      <div id="virtual-cursor" class="virtual-cursor"></div>
+    </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
