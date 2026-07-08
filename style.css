@@ -27,7 +27,7 @@ body {
     radial-gradient(at 50% 0%, hsla(225,39%,30%,0.2) 0, transparent 50%), 
     radial-gradient(at 100% 0%, hsla(339,49%,30%,0.2) 0, transparent 50%);
   background-attachment: fixed;
-  overflow: hidden; /* Prevent scrolling when moving cursor */
+  overflow-x: hidden; /* Allow vertical scrolling on mobile */
 }
 
 #app {
